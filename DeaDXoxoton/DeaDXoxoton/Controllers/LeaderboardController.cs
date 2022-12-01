@@ -16,6 +16,21 @@ public class LeaderboardController : ControllerBase
         return leaderboard.Where(x => x.GameName.Equals(gameName)).ToList();
     }
     
+    /*private List<Leaderboard> LoadLeaderboardFromDatabase()
+    {
+        var leaderboard = new List<Leaderboard>();
+        var db = new DbConnectionFactory();
+        var connection = db.OpenAsync(CancellationToken.None);
+        connection.Result.Database.
+        using (StreamReader r = new StreamReader("Score.json"))
+        {
+            string json = r.ReadToEnd();
+            leaderboard = JsonSerializer.Deserialize<List<Leaderboard>>(json);
+        }
+
+        return leaderboard;
+    }*/
+    
     private List<Leaderboard> LoadLeaderboard()
     {
         var leaderboard = new List<Leaderboard>();

@@ -25,3 +25,6 @@ C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\obj\Debug
 C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\obj\Debug\net6.0\DeaDXoxoton.pdb
 C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\obj\Debug\net6.0\DeaDXoxoton.genruntimeconfig.cache
 C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\obj\Debug\net6.0\ref\DeaDXoxoton.dll
+C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\bin\Debug\net6.0\Score.json
+C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\bin\Debug\net6.0\Dapper.dll
+C:\Users\pestova.m\RiderProjects\DDNewYearGame\DeaDXoxoton\DeaDXoxoton\bin\Debug\net6.0\Npgsql.dll
