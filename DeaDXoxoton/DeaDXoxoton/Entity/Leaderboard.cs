@@ -2,7 +2,14 @@
 
 public class Leaderboard
 {
-    public string GameName { get; set; }
+    public int GameId { get; set; }
     public int Score { get; set; }
-    public string Name { get; set; }
+    public string PlayerName { get; set; }
+
+    public Leaderboard(int gameId, int score, string playerName)
+    {
+        GameId = gameId;
+        Score = score;
+        PlayerName = playerName;
+    }
 }

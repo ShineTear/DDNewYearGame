@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using System.Text.Json.Serialization;
 using DeaDXoxoton.Entity;
 using Microsoft.AspNetCore.Mvc;
+using Npgsql;
 
 namespace DeaDXoxoton.Controllers;
 
@@ -9,34 +9,53 @@ namespace DeaDXoxoton.Controllers;
 [Route("[controller]")]
 public class LeaderboardController : ControllerBase
 {
-    [HttpGet(Name = "ShowScore")]
-    public List<Leaderboard> ShowScoreOnGame(string gameName)
+    [HttpGet(Name = "ShowScoreOnGame")]
+    public async Task<List<Leaderboard>> ShowScoreOnGame(int gameId)
     {
-        var leaderboard = LoadLeaderboard();
-        return leaderboard.Where(x => x.GameName.Equals(gameName)).ToList();
+        var leaderboard = await LoadLeaderboardFromDatabaseAsync().ConfigureAwait(false);
+        return leaderboard.Where(x => x.GameId.Equals(gameId)).OrderByDescending(x => x.Score).ToList();
     }
-    
-    /*private List<Leaderboard> LoadLeaderboardFromDatabase()
+
+    private async Task<List<Leaderboard>> LoadLeaderboardFromDatabaseAsync()
     {
         var leaderboard = new List<Leaderboard>();
         var db = new DbConnectionFactory();
-        var connection = db.OpenAsync(CancellationToken.None);
-        connection.Result.Database.
-        using (StreamReader r = new StreamReader("Score.json"))
+        var connection = await db.OpenAsync(CancellationToken.None).ConfigureAwait(false);
+
+        var sql = "SELECT * FROM leaders";
+        using var cmd = new NpgsqlCommand(sql, connection);
+
+        using var rdr = cmd.ExecuteReader();
+
+        while (rdr.Read())
         {
-            string json = r.ReadToEnd();
-            leaderboard = JsonSerializer.Deserialize<List<Leaderboard>>(json);
+            var gameId = rdr.GetInt32(0);
+            var score = rdr.GetInt32(1);
+            var playerName = rdr.GetString(2);
+            leaderboard.Add(new Leaderboard(gameId, score, playerName));
         }
 
         return leaderboard;
-    }*/
-    
+    }
+
+    [HttpPost(Name = "SaveScoreByGame")]
+    public async Task SaveScoreByGame(int gameId, int score, string playerName)
+    {
+        var db = new DbConnectionFactory();
+        var connection = await db.OpenAsync(CancellationToken.None).ConfigureAwait(false);
+
+        var sql = string.Format("INSERT INTO public.leaders (game_id, score, player_name) VALUES({0}, {1}, '{2}')",
+            gameId, score, playerName);
+        var cmd = new NpgsqlCommand(sql, connection);
+        await cmd.ExecuteNonQueryAsync().ConfigureAwait(false);
+    }
+
     private List<Leaderboard> LoadLeaderboard()
     {
         var leaderboard = new List<Leaderboard>();
-        using (StreamReader r = new StreamReader("Score.json"))
+        using (var r = new StreamReader("Score.json"))
         {
-            string json = r.ReadToEnd();
+            var json = r.ReadToEnd();
             leaderboard = JsonSerializer.Deserialize<List<Leaderboard>>(json);
         }
 

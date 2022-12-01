@@ -5,7 +5,7 @@ namespace DeaDXoxoton;
 
 public class DbConnectionFactory
 {
-    private string connectionString = "Host=localhost;Port=5431;Database=ddxoxoton";
+    private string connectionString = "Host=localhost;Port=5432;Database=ddxoxoton;Username=pguser;Password=pgpwd";
     private readonly NpgsqlConnectionStringBuilder connectionStringBuilder;
 
     public DbConnectionFactory()
@@ -13,7 +13,7 @@ public class DbConnectionFactory
         connectionStringBuilder = new NpgsqlConnectionStringBuilder(connectionString);
     }
 
-    public async Task<IDbConnection> OpenAsync(CancellationToken cancellationToken)
+    public async Task<NpgsqlConnection?> OpenAsync(CancellationToken cancellationToken)
     {
         var connection = new NpgsqlConnection(connectionStringBuilder.ConnectionString);
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);
