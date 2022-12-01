@@ -1,0 +1,22 @@
+﻿[
+  {
+    "GameName": "first",
+    "Score": 5,
+    "Name": "test1"
+  },
+  {
+    "GameName": "first",
+    "Score": 12,
+    "Name": "test53"
+  },
+  {
+    "GameName": "second",
+    "Score": 1,
+    "Name": "test"
+  },
+  {
+    "GameName": "second",
+    "Score": 4,
+    "Name": "test124"
+  }
+]
