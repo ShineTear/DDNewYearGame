@@ -1,0 +1,16 @@
+[Oo]bj
+[Bb]in
+packages
+*.user
+*.suo
+*.[Cc]ache
+*.bak
+*.ncb
+*.DS_Store
+.vs
+.idea
+[Tt]humbs.db 
+_ReSharper.*
+*.received.*
+*.orig
+*.nupkg
