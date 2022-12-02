@@ -1,6 +1,7 @@
 import { Gapped } from "@skbkontur/react-ui";
 import {RouterLink} from "./RouterLink";
 import background from "./img/background.png";
+import santa from "./img/santa.png";
 import {backgroundImg} from "./img";
 
 export function Splash() {
@@ -13,7 +14,7 @@ export function Splash() {
         
             <RouterLink to="/Game">Играть</RouterLink>
             <RouterLink to="/Leaderboard">Доска почета</RouterLink>
-            <div className="cropped"><img src={background}/></div>
+            <div className="cropped"><img className="santaImage" src={santa}/></div>
 
     </Gapped>
 }
