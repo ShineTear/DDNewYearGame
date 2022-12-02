@@ -10,4 +10,14 @@ export default defineConfig({
   define: {
     global: {},
   },
+  server: {
+    proxy: {
+      '/api': {
+      target: 'http://localhost:5008',
+      changeOrigin: true,
+      secure: false,
+      ws: true,
+      }
+    }
+  }
 })
