@@ -12,7 +12,7 @@ export function Leaderboard() {
 
     useEffect(() => {
         getScores();
-    })
+    }, [])
 
     return <Gapped vertical>
         <h2>Доска лидеров</h2>
