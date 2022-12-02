@@ -23,7 +23,8 @@ INSERT INTO leaderboard_scores (player_name, score)
 VALUES (@PlayerName, @Score)
 ON CONFLICT (player_name)
 DO UPDATE
-SET score = excluded.score";
+SET score = excluded.score
+WHERE leaderboard_scores.score < excluded.score";
 
         await db.ExecuteAsync(sql, entity);
     }
