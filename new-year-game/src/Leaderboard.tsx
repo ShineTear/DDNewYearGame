@@ -16,6 +16,9 @@ export function Leaderboard() {
 
     return <Gapped vertical>
         <h2>Доска лидеров</h2>
-        {scores.map((x, i) => <div>{i + 1}. {x.playerName} - {x.score}</div>)}
+        {scores
+            .sort((a, b) => b.score - a.score)
+            .map((x, i) => <div>{i + 1}. {x.playerName} - {x.score}</div>)
+        }
     </Gapped>
 }
