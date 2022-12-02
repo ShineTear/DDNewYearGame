@@ -27,12 +27,4 @@ public class LeaderboardController : ControllerBase
     {
         return _db.WriteAsync(entity, cancellationToken);
     }
-
-    [HttpGet("score/{playerName}")]
-    public Task<LeaderboardScore?> GetScoreAsync(
-        [FromRoute] string playerName,
-        CancellationToken cancellationToken)
-    {
-        return _db.GetAsync(playerName, cancellationToken);
-    }
 }

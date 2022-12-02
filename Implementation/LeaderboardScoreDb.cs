@@ -35,19 +35,6 @@ WHERE leaderboard_scores.score < excluded.score";
         await db.ExecuteAsync(sql, entity);
     }
 
-    public async Task<LeaderboardScore?> GetAsync(
-        string playerName,
-        CancellationToken cancellationToken)
-    {
-        using var db = await _connection.OpenAsync(cancellationToken);
-
-        const string sql = @"
-SELECT player_name, score 
-FROM leaderboard_scores 
-WHERE player_name = @PlayerName";
-
-        return await db.QuerySingleOrDefaultAsync<LeaderboardScore?>(sql, new { PlayerName = playerName });
-    }
 
     public async Task<IEnumerable<LeaderboardScore>> GetAllAsync(CancellationToken cancellationToken)
     {
@@ -55,7 +42,8 @@ WHERE player_name = @PlayerName";
 
         const string sql = @"
 SELECT player_name, score 
-FROM leaderboard_scores";
+FROM leaderboard_scores
+ORDER BY score DESC";
 
         return await db.QueryAsync<LeaderboardScore>(sql);
     }
