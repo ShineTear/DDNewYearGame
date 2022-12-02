@@ -23,9 +23,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseMiddleware<ExceptionMiddleware>();
-app.UseDefaultFiles();
-app.UseStaticFiles();
-// app.UseHttpsRedirection();
+app.MapWhen(ctx => !ctx.Request.Path.StartsWithSegments("/api"), app =>
+{
+    app.UseMiddleware<DefaultFileMiddleware>();
+    app.UseStaticFiles(new StaticFileOptions {ServeUnknownFileTypes = true});
+});
 app.UseAuthorization();
 app.MapControllers();
 app.Run();
