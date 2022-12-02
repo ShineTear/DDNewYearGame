@@ -22,6 +22,11 @@ public class LeaderboardScoreDb
         LeaderboardScore entity,
         CancellationToken cancellationToken)
     {
+        if (entity.Score <= 0)
+        {
+            return;
+        }
+
         using var db = await _connection.OpenAsync(cancellationToken);
 
         const string sql = @"
