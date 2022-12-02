@@ -68,7 +68,9 @@ export function render(canvas: HTMLCanvasElement, context: CanvasRenderingContex
     context.fillStyle = "#2B3280";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawImg(context, {x: state.background.width / 2, y: state.background.height / 2}, state.background)
+    drawImg(context, {x: state.backgroundPrev.pos, y: state.backgroundPrev.img.height / 2 }, state.backgroundPrev.img)
+    drawImg(context, {x: state.background.pos, y: state.background.img.height / 2 }, state.background.img)
+    drawImg(context, {x: state.backgroundNext.pos, y: state.backgroundNext.img.height / 2 }, state.backgroundNext.img)
     drawImg(context, {x: state.prev.pos, y: 400}, state.prev.img);
     drawImg(context, {x: state.current.pos, y: 400}, state.current.img, true);
     drawImg(context, {x: state.next.pos, y: 400}, state.next.img);
@@ -123,6 +125,15 @@ export function update(state: GameState, previousTime: number, currentTime: numb
         };
     }
 
+    if (state.background.pos < 683) {
+        state.backgroundPrev = state.background;
+        state.background = state.backgroundNext;
+        state.backgroundNext = {
+            ...state.background,
+            pos: state.background.pos + 1367,
+        };
+    }
+
     state.presents = state.presents.filter(x => !state.gameOver && x.y <= CHIMNEY + 32);
 
     let dt = (currentTime - previousTime) * multiplyer(state.totalJumps);
@@ -172,6 +183,9 @@ export function update(state: GameState, previousTime: number, currentTime: numb
     state.prev.pos -= dt * 0.3;
     state.current.pos -= dt * 0.3;
     state.next.pos -= dt * 0.3;
+	state.backgroundPrev.pos -= dt * 0.03;
+	state.background.pos -= dt * 0.03;
+	state.backgroundNext.pos -= dt * 0.03;
 
     for (let p of state.presents) {
         p.x -= dt * 0.3;

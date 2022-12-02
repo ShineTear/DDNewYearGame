@@ -12,7 +12,9 @@ export function setDefaultState() {
         height: 330,
         velocity: 0,
     };
-    state.background = backgroundImg;
+    state.backgroundPrev = {img: backgroundImg, pos: 683};
+    state.background = {img: backgroundImg, pos: 2050};
+    state.backgroundNext = {img: backgroundImg, pos: 3417};
     state.presents = [];
     state.score = 0;
     state.jumps = 0;

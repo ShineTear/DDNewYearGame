@@ -20,13 +20,20 @@ interface SantaState {
     velocity: number;
 }
 
+interface BackgroundState {
+    img: HTMLImageElement;
+    pos: number;
+}
+
 export interface GameState {
     prev: RoofState;
     current: RoofState;
     next: RoofState;
     santa: SantaState;
     presents: Gift[];
-    background: HTMLImageElement;
+    backgroundPrev: BackgroundState;
+    background: BackgroundState;
+    backgroundNext: BackgroundState;
     currentChimney?: null | number;
     score: number;
     jumps: number;
