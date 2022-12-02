@@ -19,12 +19,7 @@ export function getPlayerName(): string | null {
 }
 
 export function GameWrapper() {
-    let userName: null | string = null;
-    if (document.cookie.includes(userNameCookie)) {
-        const nameStart = document.cookie.indexOf(userNameCookie) + userNameCookie.length;
-        const nameEnd = document.cookie.indexOf(";", nameStart) || document.cookie.length - 1;
-        userName = document.cookie.substring(nameStart, nameEnd);
-    }
+    let userName: null | string = getPlayerName();
     const [name, setName] = useState<null | string>(userName);
     const emptyName = name == null || name === "";
     return <Gapped vertical>
