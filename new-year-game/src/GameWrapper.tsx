@@ -29,7 +29,7 @@ export function GameWrapper() {
         }} />}
         {!emptyName &&
             <Gapped vertical>
-                <h2>Хохотон</h2>
+                <h2>Хо-Хо-тун</h2>
                 <div>Имя: {name}</div>
                 <div>Space - прыгать</div>
                 <div>F - кидать подарки</div>
