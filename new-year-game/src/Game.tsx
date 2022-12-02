@@ -5,6 +5,7 @@ import {state} from "./GameState";
 import {backgroundImg} from "./img";
 
 export interface GameProps {
+    name: string;
     width: number;
     height: number;
 }
