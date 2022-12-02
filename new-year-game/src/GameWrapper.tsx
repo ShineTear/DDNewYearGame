@@ -5,6 +5,19 @@ import {NameModal} from "./NameModal";
 
 export const userNameCookie = "useruserUserName=";
 
+export function getPlayerName(): string | null {
+    if (document.cookie.includes(userNameCookie)) {
+        const nameStart = document.cookie.indexOf(userNameCookie) + userNameCookie.length;
+        let nameEnd = document.cookie.indexOf(";", nameStart);
+        if (!nameEnd || nameEnd == -1) {
+            nameEnd = document.cookie.length;
+        }
+        return document.cookie.substring(nameStart, nameEnd);
+    }
+
+    return null;
+}
+
 export function GameWrapper() {
     let userName: null | string = null;
     if (document.cookie.includes(userNameCookie)) {

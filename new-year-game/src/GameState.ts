@@ -33,6 +33,7 @@ export interface GameState {
     gameOver: boolean;
     debug: boolean;
     totalJumps: number;
+    statsSent: boolean;
 }
 
 const BASELINE = 400;

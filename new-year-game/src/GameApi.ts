@@ -8,7 +8,7 @@ export interface LeaderboardScore
 
 export class GameApi extends ApiBase {
     public async saveScoreByGame(entity: LeaderboardScore): Promise<void> {
-        return this.post(`score`, {
+        return this.post(`/score`, {
             ...entity
         });
     }

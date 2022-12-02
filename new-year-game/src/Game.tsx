@@ -2,7 +2,6 @@ import React, {useEffect, useRef} from "react";
 import {debug, jump, setDefaultState, spawnGift} from "./GameActions";
 import {render, update} from "./GameLoop";
 import {state} from "./GameState";
-import {backgroundImg} from "./img";
 
 export interface GameProps {
     name: string;

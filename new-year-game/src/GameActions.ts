@@ -20,6 +20,7 @@ export function setDefaultState() {
     state.debug = false;
     state.totalJumps = 0;
     state.currentChimney = null;
+    state.statsSent = false;
 }
 
 export function debug() {

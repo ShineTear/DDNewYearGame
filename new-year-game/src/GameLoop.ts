@@ -7,10 +7,12 @@ import {
     roofRight,
     roofRightChimney, santaDeadImg, santaJumpImg, santaWalk1Img, santaWalk2Img,
 } from "./img";
-import type { Roof, RoofType } from "./img";
+import type {Roof, RoofType} from "./img";
 
 import {CHIMNEY, currentMin, LAVA, state} from "./GameState";
-import type { GameState, Point } from "./GameState";
+import type {GameState, Point} from "./GameState";
+import {api} from "./GameApi";
+import {getPlayerName} from "./GameWrapper";
 
 const possibleRoofs: { [key in RoofType]: Roof[] } = {
     "start": [roofLeft, roofLeftChimney],
@@ -66,7 +68,7 @@ export function render(canvas: HTMLCanvasElement, context: CanvasRenderingContex
     context.fillStyle = "#2B3280";
     context.fillRect(0, 0, canvas.width, canvas.height);
 
-    drawImg(context, { x: state.background.width / 2, y: state.background.height / 2 }, state.background)
+    drawImg(context, {x: state.background.width / 2, y: state.background.height / 2}, state.background)
     drawImg(context, {x: state.prev.pos, y: 400}, state.prev.img);
     drawImg(context, {x: state.current.pos, y: 400}, state.current.img, true);
     drawImg(context, {x: state.next.pos, y: 400}, state.next.img);
@@ -100,6 +102,13 @@ export function render(canvas: HTMLCanvasElement, context: CanvasRenderingContex
 
 export function update(state: GameState, previousTime: number, currentTime: number) {
     if (state.gameOver) {
+        if (!state.statsSent) {
+            const playerName = getPlayerName();
+            if (playerName) {
+                api.saveScoreByGame({score: state.score, playerName: playerName})
+            }
+            state.statsSent = true;
+        }
         state.presents = [];
         return;
     }

@@ -1,5 +1,6 @@
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {api, LeaderboardScore} from "./GameApi";
+import {Gapped} from "@skbkontur/react-ui";
 
 export function Leaderboard() {
     const [scores, setScores] = useState<LeaderboardScore[]>([])
@@ -13,7 +14,8 @@ export function Leaderboard() {
         getScores();
     })
 
-    return <div>
+    return <Gapped vertical>
+        <h2>Доска лидеров</h2>
         {scores.map(x => <div>{x.playerName} - {x.score}</div>)}
-    </div>
+    </Gapped>
 }
