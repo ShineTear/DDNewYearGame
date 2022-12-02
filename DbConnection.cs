@@ -3,13 +3,17 @@ using Npgsql;
 
 namespace DeaDXoxoton;
 
-public static class DbConnection
+public class DbConnection
 {
-    public static async Task<IDbConnection> OpenAsync(CancellationToken cancellationToken)
-    {
-        const string connectionString =
-            @"Host=localhost;Port=5432;Database=deadhohoton;Username=pguser;Password=pgpwd";
+    private readonly string connectionString;
 
+    public DbConnection(IConfiguration configuration)
+    {
+        connectionString = configuration.GetConnectionString("PG");
+    }
+
+    public async Task<IDbConnection> OpenAsync(CancellationToken cancellationToken)
+    {
         var connection = new NpgsqlConnection(connectionString);
 
         await connection.OpenAsync(cancellationToken).ConfigureAwait(false);

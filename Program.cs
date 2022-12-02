@@ -1,11 +1,14 @@
 using Dapper;
 using DeaDXoxoton;
+using DeaDXoxoton.Implementation;
 
 DefaultTypeMap.MatchNamesWithUnderscores = true;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureOptions<ConfigureMvcOptions>();
+builder.Services.AddTransient<DbConnection>();
+builder.Services.AddTransient<LeaderboardScoreDb>();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

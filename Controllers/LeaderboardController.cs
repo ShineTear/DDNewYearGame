@@ -7,10 +7,17 @@ namespace DeaDXoxoton.Controllers;
 [Route("api/leaderboard")]
 public class LeaderboardController : ControllerBase
 {
+    private readonly LeaderboardScoreDb _db;
+
+    public LeaderboardController(LeaderboardScoreDb db)
+    {
+        _db = db;
+    }
+
     [HttpGet("")]
     public Task<IEnumerable<LeaderboardScore>> ShowScoreOnGame(CancellationToken cancellationToken)
     {
-        return LeaderboardScoreDb.GetAllAsync(cancellationToken);
+        return _db.GetAllAsync(cancellationToken);
     }
 
     [HttpPost("score")]
@@ -18,7 +25,7 @@ public class LeaderboardController : ControllerBase
         [FromBody] LeaderboardScore entity,
         CancellationToken cancellationToken)
     {
-        return LeaderboardScoreDb.WriteAsync(entity, cancellationToken);
+        return _db.WriteAsync(entity, cancellationToken);
     }
 
     [HttpGet("score/{playerName}")]
@@ -26,6 +33,6 @@ public class LeaderboardController : ControllerBase
         [FromRoute] string playerName,
         CancellationToken cancellationToken)
     {
-        return LeaderboardScoreDb.GetAsync(playerName, cancellationToken);
+        return _db.GetAsync(playerName, cancellationToken);
     }
 }

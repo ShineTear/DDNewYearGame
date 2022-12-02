@@ -2,8 +2,14 @@ using Dapper;
 
 namespace DeaDXoxoton.Implementation;
 
-public static class LeaderboardScoreDb
+public class LeaderboardScoreDb
 {
+    private readonly DbConnection _connection;
+
+    public LeaderboardScoreDb(DbConnection connection)
+    {
+        _connection = connection;
+    }
     /*
     CREATE TABLE public.leaderboard_scores (
 	    player_name text NOT NULL,
@@ -12,11 +18,11 @@ public static class LeaderboardScoreDb
     );
     */
 
-    public static async Task WriteAsync(
+    public async Task WriteAsync(
         LeaderboardScore entity,
         CancellationToken cancellationToken)
     {
-        using var db = await DbConnection.OpenAsync(cancellationToken);
+        using var db = await _connection.OpenAsync(cancellationToken);
 
         const string sql = @"
 INSERT INTO leaderboard_scores (player_name, score) 
@@ -29,11 +35,11 @@ WHERE leaderboard_scores.score < excluded.score";
         await db.ExecuteAsync(sql, entity);
     }
 
-    public static async Task<LeaderboardScore?> GetAsync(
+    public async Task<LeaderboardScore?> GetAsync(
         string playerName,
         CancellationToken cancellationToken)
     {
-        using var db = await DbConnection.OpenAsync(cancellationToken);
+        using var db = await _connection.OpenAsync(cancellationToken);
 
         const string sql = @"
 SELECT player_name, score 
@@ -43,9 +49,9 @@ WHERE player_name = @PlayerName";
         return await db.QuerySingleOrDefaultAsync<LeaderboardScore?>(sql, new { PlayerName = playerName });
     }
 
-    public static async Task<IEnumerable<LeaderboardScore>> GetAllAsync(CancellationToken cancellationToken)
+    public async Task<IEnumerable<LeaderboardScore>> GetAllAsync(CancellationToken cancellationToken)
     {
-        using var db = await DbConnection.OpenAsync(cancellationToken);
+        using var db = await _connection.OpenAsync(cancellationToken);
 
         const string sql = @"
 SELECT player_name, score 
