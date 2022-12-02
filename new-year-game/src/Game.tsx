@@ -9,14 +9,14 @@ export interface GameProps {
     height: number;
 }
 
-const controls: {[key: string]: () => void} = {
+const controls: { [key: string]: () => void } = {
     'KeyR': setDefaultState,
     'BracketLeft': debug,
     'KeyF': spawnGift,
     'Space': jump,
 }
 
-window.addEventListener('keydown', function (event) {
+function onKeyDown(event: KeyboardEvent) {
     if (!controls[event.code]) {
         return;
     }
@@ -26,7 +26,8 @@ window.addEventListener('keydown', function (event) {
     event.stopImmediatePropagation();
 
     controls[event.code]();
-});
+}
+
 
 export function Game({width, height}: GameProps) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -51,10 +52,18 @@ export function Game({width, height}: GameProps) {
         const context = canvas.getContext("2d") as CanvasRenderingContext2D;
         contextRef.current = context;
 
+        window.addEventListener('keydown', onKeyDown);
+        console.info("add");
+
         setDefaultState();
 
         requestRef.current = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(requestRef.current as number);
+
+        return () => {
+            console.info("remove");
+            window.removeEventListener('keydown', onKeyDown);
+            cancelAnimationFrame(requestRef.current as number);
+        }
     }, []);
 
     return (
