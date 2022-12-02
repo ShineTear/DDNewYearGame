@@ -5,10 +5,14 @@ import {backgroundImg} from "./img";
 
 export function Splash() {
     return <Gapped vertical>
-            <h2>главный экран</h2>
-            <div>ну типа описание игры</div>
-            <div className="cropped"><img src={background}/></div>
+            <h2>Дед Хо-Хо-тун</h2>
+            <div>Хо-Хо! Дед Мороз!</div>
+            <div>Беги быстрее от 2022, успей выкинуть все лишнее из своих карманчиков, пока не наступил 2023.</div>
+            <div>Самый быстрый Дед мороз получает приз (Хо-Хо-Хо!)</div>
+            <br/>
             <RouterLink to="/Game">Играть</RouterLink>
             <RouterLink to="/Leaderboard">Доска почета</RouterLink>
+            <div className="cropped"><img src={background}/></div>
+
     </Gapped>
 }
